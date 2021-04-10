@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非属性特性</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <date-picker
+        class="date-picker"
+        data-status="activated"
+        @change="submitChange"
+      ></date-picker>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue
+      const app = createApp({
+        data () {
+          return {
+            title: '非属性特性'
+          }
+        },
+        methods: {
+          submitChange () {}
+        }
+      })
+      // 非属性特性有继承的特点
+      // v-bind="$attrs"  属性的透传，爷孙之间的传值
+      app.component('date-picker', {
+        inheritAttrs: false, // 禁用 Attribute 继承
+        template: `
+          <div>
+            <input type="datetime" v-bind="$attrs" />  
+          </div>
+        `,
+        created () {
+          console.log(this.$attrs)
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

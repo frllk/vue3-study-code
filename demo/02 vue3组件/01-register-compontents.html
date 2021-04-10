@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>注册组件</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <my-component></my-component>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue
+      const app = createApp({
+        data () {
+          return {
+            title: '自定义组件'
+          }
+        }
+      })
+      // 创建应用程序之后，挂载之前，通过该应用程序的实例component方法来创建
+      // 注册组件
+      app.component('my-component', {
+        name: 'myComponent',
+        template: '<div>my-component</div>'
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

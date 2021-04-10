@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>单向数据流</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <component-a :initial-counter="1"></component-a>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue
+      // component-a
+      /**
+       * counter：父级传递过来的，但是只想把这个值当作我的起始值，因为将来在内部还希望通过一些交互去改变counter，让它发生变化
+       * 那时在组件内部又不能去改变这个counter，怎么办呢？
+       *
+       */
+      const ComponentA = {
+        template: '<div>{{counter}}</div>',
+        props: {
+          initialCounter: Number
+        },
+        data () {
+          return {
+            counter: this.initialCounter
+          }
+        }
+      }
+
+      const app = createApp({
+        data () {
+          return {
+            title: '单向数据流'
+          }
+        },
+        components: {
+          'component-a': ComponentA
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>局部注册</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <component-a v-bind="userinfo" :todolist="todolist"></component-a>
+      <!-- <component-a username="tom" :age="age" :todolist="todolist"></component-a> -->
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue
+      // component-a
+      const ComponentA = {
+        template:
+          '<div>{{username}}</div><p>{{age}}</p><ul><li v-for="todo in todolist">{{todo}}</li></ul>',
+        props: {
+          username: String,
+          age: Number,
+          todolist: Array
+        }
+      }
+
+      const app = createApp({
+        data () {
+          return {
+            title: '组件属性类型',
+            age: 20,
+            userinfo: {
+              username: 'tom',
+              age: 22
+            },
+            todolist: ['吃饭', '睡觉', '打游戏']
+          }
+        },
+        components: {
+          'component-a': ComponentA
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>

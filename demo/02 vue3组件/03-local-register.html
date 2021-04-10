@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>局部注册</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <component-a></component-a>
+      <component-b></component-b>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue
+      // 避免找不到组件，准备注册之前先声明
+      /**
+       * 用法：单独声明组件，局部进行注册
+       * 不同：
+       *  1.仅能在当前声明compontents的组件中使用，如果未来还有一些别的组件需要使用
+       * 这些组件，也需要配置components
+       * 2.在未来的构建系统中，也是只有这些被用到的组件才会被打包在内
+       * 好处：只有在用的时候才会被注册
+       */
+      // component-a
+      const ComponentA = {
+        template: '<div>component-a</div>'
+      }
+
+      // component-b
+      const ComponentB = {
+        components: {
+          'component-a': ComponentA
+        },
+        template: '<div>component-b</div><component-a></component-a>'
+      }
+      const app = createApp({
+        data () {
+          return {
+            title: '局部注册'
+          }
+        },
+        components: {
+          'component-a': ComponentA,
+          'component-b': ComponentB
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
